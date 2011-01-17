@@ -816,13 +816,14 @@ module Net  #:nodoc:
 
 		def request req, body=nil, &block
 			resp = data = auth_data = nil
-			old_request req, body do |resp|
-				wwwauth = resp.header['www-authenticate'].split(",").collect{|x| x.strip} rescue ""
-				unless Net::HTTPUnauthorized === resp and auth_data = req.auth_data and
+			old_request req, body do |r|
+			  resp = r
+				wwwauth = r.header['www-authenticate'].split(",").collect{|x| x.strip} rescue ""
+				unless Net::HTTPUnauthorized === r and auth_data = req.auth_data and
 					auth_data[0] == :ntlm and (wwwauth == 'NTLM' || wwwauth.is_a?(Array) && wwwauth.include?('NTLM')) ||
-					data = resp['www-authenticate'][/^NTLM (.*)/, 1]
+					data = r['www-authenticate'][/^NTLM (.*)/, 1]
 					data = false
-					yield resp if block_given?
+					yield r if block_given?
 				end
 			end
 			return resp if data == false
