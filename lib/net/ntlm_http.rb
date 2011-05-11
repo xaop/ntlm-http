@@ -845,7 +845,7 @@ module Net  #:nodoc:
 				# a user prompt.
 				resp = challenge.response({:user => auth_data[1], :password => auth_data[2]}, {:ntlmv2 => true})
 				req['Authorization'] = 'NTLM ' + resp.encode64
-				old_request(req, body) { |resp| yield resp if block_given? }
+				old_request(req, body) { |r| resp = r ; yield r if block_given? }
 				resp
 			end
 		end
