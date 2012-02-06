@@ -818,7 +818,7 @@ module Net  #:nodoc:
 			resp = data = auth_data = nil
 			old_request req, body do |r|
 			  resp = r
-				wwwauth = r.header['www-authenticate'].split(",").collect{|x| x.strip} rescue ""
+				wwwauth = r['www-authenticate'].split(",").collect{|x| x.strip} rescue ""
 				unless Net::HTTPUnauthorized === r and auth_data = req.auth_data and
 					auth_data[0] == :ntlm and (wwwauth == 'NTLM' || wwwauth.is_a?(Array) && wwwauth.include?('NTLM')) ||
 					data = r['www-authenticate'][/^NTLM (.*)/, 1]
