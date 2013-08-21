@@ -1,3 +1,4 @@
+# encoding: ascii
 #
 # = net/ntlm.rb
 #
