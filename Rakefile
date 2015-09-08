@@ -7,7 +7,7 @@ require 'rake/packagetask'
 require 'rake/gempackagetask'
 require File.join(File.dirname(__FILE__), 'lib', 'net', 'ntlm')
 
-PKG_NAME = 'rubyntlm'
+PKG_NAME = 'xaop-ntlm-http'
 PKG_VERSION = Net::NTLM::VERSION::STRING
 
 task :default => [:test]
