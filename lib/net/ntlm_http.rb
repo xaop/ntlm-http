@@ -49,8 +49,9 @@ module Net  #:nodoc:
     private :old_request
 
     def request req, body=nil, &block
-      data = auth_data = nil
-      resp = old_request req, body do |r|
+      resp = data = auth_data = nil
+      old_request req, body do |r|
+        resp = r
         wwwauth = r['www-authenticate'].split(",").collect{|x| x.strip} rescue ""
         unless Net::HTTPUnauthorized === r and auth_data = req.auth_data and
           auth_data[0] == :ntlm and (wwwauth == 'NTLM' || wwwauth.is_a?(Array) && wwwauth.include?('NTLM')) ||
